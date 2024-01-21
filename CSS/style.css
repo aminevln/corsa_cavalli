@@ -5,8 +5,8 @@ body{
     background: #000;
 }
 .cp{
-    width: 100px;
-    height: 150px;
+    width: 100%;
+    height: 150%;
     border: 2px solid rgb(255, 255, 255);
     -webkit-box-shadow:0px 0px 25px 0px rgba(151,46,255,1);
     -moz-box-shadow: 0px 0px 25px 0px rgba(151,46,255,1);
@@ -18,7 +18,7 @@ body{
 .cn{
   width: 100%;
   padding-left: 8px;
-  height: 30px;
+  height: 20%;
   font-size: 1.5rem;
   text-shadow: 0px 0px 36px 0px rgba(151,46,255,1);
   
@@ -27,11 +27,131 @@ body{
   width: 100%;
   font-size: 1.2rem;
   padding-left: 8px;
-  height: 20px;
+  height: 13%;
 }
 .cbs{
   width: 100%;
   text-align: center;
+  font-size: 2.5rem;
+  height: 25%;
+  padding-bottom: 5px;
+
+}
+#base{
+  position: absolute;
+  width: 25%;
+  height: 160px;
+  bottom: 5%;
+  left: 15%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.home{
+  height: 90px;
+  width: 20%;
+  margin: 2.5%;
+}
+#pista{
+  position: absolute;
+  width: 25%;
+  height: 500px;
+  bottom: 27%;
+  left: 15%;
+  border: .1px solid rgb(211, 211, 211);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#pista_aside{
+  position: absolute;
+  width: 6%;
+  height: 675px;
+  bottom: 5%;
+  left: 5%;
+  border: .1px solid rgb(211, 211, 211);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.corsie{
+  height: 500px;
+  width: 25%;
+  margin: 1.5%;
+  border: .1px solid rgb(211, 211, 211);
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.corsie_aside{
+  height: 675px;
+  width: 100%;
+  border: .1px solid rgb(211, 211, 211);
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.casella{
+  width: 100%;
+  height: 120px;
+  margin-top: 5.5px;
+  margin-bottom: 5.5px;
+  border: .1px solid rgb(211, 211, 211);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background: transparent;
+}
+
+.corsie_aside > div{
+  background-image: url('../IMG/dorso.JPG');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#mazzo{
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  border: .1px solid rgb(211, 211, 211);
+  height: 230px;
+  width: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+}
+#uscita{
+  position: absolute;
+  bottom: 5%;
+  left: 60%;
+  border: .1px solid rgb(211, 211, 211);
+  height: 230px;
+  width: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#mazzo > div{
+  width: 75%;
+  background-image: url('../IMG/dorso.JPG');
+  background-image: url('../IMG/dorso.JPG');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+#cartaUscita{
+  width: 75%;
+}
+#w{
+  position: absolute;
+  left: 50%;
+  top: 40%;
   font-size: 3rem;
-  height: 50px;
 }
