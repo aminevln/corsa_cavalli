@@ -13,7 +13,7 @@ let symbols = document.getElementsByClassName('p')
 for(let i = 0; i<symbols.length; i++)
     symbols[i].addEventListener('click', function() {
         for(let j = 0; j<symbols.length; j++)
-            symbols[j].style.visibility = "hidden"
+            symbols[j].style.visibility = "hidden" 
         selectedSeed(symbols[i].textContent);
 
     });
@@ -21,22 +21,24 @@ for(let i = 0; i<symbols.length; i++)
 $("#mazzoUscito").click(function(){
     $.ajax({
         type: 'GET',
-        url: './PHP/control.php',
-        dataType: 'json',
+        url: './PHP/index.php',
+        dataType: 'text', // Cambiato da 'json' a 'text'
         success: function(data) {
-            alert('Risposta dal server:', data.cartaUscita);
-            // $('#cartaUscita').html({
-            //     'background-image' : "url('./IMG/"+data.cartaUscita+"')",
-            //     'background-repeat' : 'no-repeat',
-            //     'background-size' : 'cover'
-            // })
-            play(data.cartaUscita)
+            try {
+                console.log("risposta: "+ data)
+                alert('Risposta dal server: ' + data);
+                //play(jsonData.cartaUscita)
+            } catch (e) {
+                console.error('Errore nel parsing JSON:', e);
+            }
         },
-        error: function(err) {
-            console.log('Errore'+err);
+        error: function(xhr, status, error) {
+            console.log('Errore: ' + status + ' - ' + error);
+            console.log(xhr.responseText);
         }
     });
-})
+});
+    
 function selectedSeed(seed){
     document.getElementById('w').textContent = "STAI SCOMMETTENDO SU"
     let a = `

@@ -1,4 +1,16 @@
 <?php
+
+?>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOMBOLA</title>
+</head>
+<body>
+
+<?php
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
@@ -23,5 +35,6 @@ $randomIndex = mt_rand(0, count($coppie) - 1);
 $removedElement = array_splice($coppie, $randomIndex, 1);
 
 echo json_encode(['cartaUscita' => $removedElement[0]]);
-exit;
 ?>
+</body>
+</html>
