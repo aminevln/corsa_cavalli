@@ -1,5 +1,5 @@
 
-let mazouscito = document.getElementById("mazzoUscito");
+console.log('ciao')
 let base = document.getElementsByClassName('home')
 let seeds = ['♤', '♡', '♢', '♧']
 for(let i=0; i<base.length; i++)
@@ -13,31 +13,47 @@ let symbols = document.getElementsByClassName('p')
 for(let i = 0; i<symbols.length; i++)
     symbols[i].addEventListener('click', function() {
         for(let j = 0; j<symbols.length; j++)
-            symbols[j].style.visibility = "hidden"
+            symbols[j].style.visibility = "hidden" 
         selectedSeed(symbols[i].textContent);
 
     });
 
-    $(document).on('click', '#mazzoUscito', function() {
-        $.ajax({
-            type: 'GET',
-            url: '../PHP/control.php',
-            dataType: 'json',
-            success: function(data) {
-                console.log("bella");
-                alert('Risposta dal server:' + data.cartaUscita);
-                // $('#cartaUscita').html({
-                //     'background-image' : "url('./IMG/"+data.cartaUscita+"')",
-                //     'background-repeat' : 'no-repeat',
-                //     'background-size' : 'cover'
-                // });
-                play(data.cartaUscita);
-            },
-            error: function(err) {
-                console.log('Errore' + err);                
-            }
-        });
+$("#mazzoUscito").click(function(){
+    $.ajax({
+        type: 'GET',
+        url: './PHP/control.php',
+        dataType: 'text', 
+        success: function(data) {
+            play(data.substring(1, data.length-1))
+        },
+        error: function(xhr, status, error) {
+            console.log('Errore: ' + status + ' - ' + error);
+            console.log(xhr.responseText);
+        }
     });
+});
+function play(carta){
+    console.log(carta)
+    if(carta.startsWith('E'))
+        document.getElementById('w').textContent = "TUTTE LE CARTE SONO STATE ESTRATTE"
+    else{
+        let numero = carta.split('.')[0]
+    let seed = carta.split('.')[1]
+    //if(seed)
+    let a = "ciao"
+    if(seed.startsWith('q'))
+        seed = '♢'
+    else if(seed.startsWith('c'))
+        seed = '♡'
+    else if(seed.startsWith('p'))
+        seed = '♤'
+    else if(seed.startsWith('f'))
+        seed = '♧'
+
+    document.getElementById('cartaUscita').innerHTML = getNewCard(numero, seed)//getBackCard() 
+    }
+    
+}  
 function selectedSeed(seed){
     document.getElementById('w').textContent = "STAI SCOMMETTENDO SU"
     let a = `
@@ -52,6 +68,21 @@ function selectedSeed(seed){
     </div>
     `
     document.body.innerHTML+=a
+    $("#mazzoUscito").click(function(){
+        $.ajax({
+            type: 'GET',
+            url: './PHP/control.php',
+            dataType: 'text', 
+            success: function(data) {
+                console.log(data)
+                play(data.substring(1, data.length-1))
+            },
+            error: function(xhr, status, error) {
+                console.log('Errore: ' + status + ' - ' + error);
+                console.log(xhr.responseText);
+            }
+        });
+    });
     
 }
 function getCard(number, seed){
@@ -65,6 +96,18 @@ function getCard(number, seed){
             <div class="cn" style="text-align: right; padding-left:0; margin-right: 12px;">${number}</div>
         </div>
     `)
+}
+function getNewCard(number, seed){
+    return(
+        `
+            <div class="cp" style="width: 80px; height: 120px; margin-top: 8px;" >
+                <div class="cn">${number}</div>
+                <div class="cs">${seed}</div>
+                <div class="cbs">${seed}</div>
+                <div class="cs" style="text-align: right; padding-left:0; margin-right: 12px;">${seed}</div>
+                <div class="cn" style="text-align: right; padding-left:0; margin-right: 12px;">${number}</div>
+            </div>
+        `)
 }
 function getBackCard(){
     return(
