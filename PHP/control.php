@@ -34,19 +34,18 @@ foreach ($setA as $numA) {
 if (!empty($coppie)) {
     $randomIndex = mt_rand(0, count($coppie) - 1);
     $removedElement = array_splice($coppie, $randomIndex, 1);
-    // Aggiungi la carta estratta all'array delle carte uscite
     $splitResult = explode(".", $removedElement[0]);
     if($splitResult[1] === 'p'){
-        $idxP+=90;
+        $idxP+=120;
         $removedElement[0] = $removedElement[0].".".$idxP;
     } else if($splitResult[1] === 'q'){
-        $idxQ+=90;
+        $idxQ+=120;
         $removedElement[0] = $removedElement[0].".".$idxQ;
     } else if($splitResult[1] === 'f'){
-        $idxF+=90;
+        $idxF+=120;
         $removedElement[0] = $removedElement[0].".".$idxF;
     } else if($splitResult[1] === 'c'){
-        $idxC+=90;
+        $idxC+=120;
         $removedElement[0] = $removedElement[0].".".$idxC;
     }
     $_SESSION['carteUscite'][] = $removedElement[0];

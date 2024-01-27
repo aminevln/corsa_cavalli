@@ -113,41 +113,41 @@ function getBackCard() {
             <div class="cpn" style="margin: 0px; margin-top: 8px;">?</div>
         `;
 }
-function move(seed) {
-  let horses = document.getElementsByClassName("keySeed");
-  for (let i = 0; i < horses.length; i++) {
-    if (horses[i].textContent == seed) {
-      if (seed.startsWith("♢")) {
-        iQ += 120;
-        base[i].style.bottom = iQ+"%";
-      } else if (seed.startsWith("♡")) {
-        iC += 120;
-        base[i].style.bottom = iC+"%";
-      } else if (seed.startsWith("♤")) {
-        iP += 120;
-        base[i].style.bottom = iP+"%";
-      } else if (seed.startsWith("♧")) {
-        iF += 120;
-        base[i].style.bottom = iF+"%";
-      } 	 	 	 
-    }
-  }
-  check()
-}
-function check(){
-    if(iQ >= 120 && iF >= 120 && iC >= 120 && iP >=120){
-        $.ajax({
-            type: "GET",
-            url: "./PHP/control.php",
-            dataType: "text",
-            success: function (data) {
-              document.getElementById('k0').innerHTML = getNewCard(data.substring(2, data.length - 2).split('.')[0], data.substring(1, data.length - 1).split('.')[1])
-              play(data.substring(1, data.length - 1));
-            },
-            error: function (xhr, status, error) {
-              console.log("Errore: " + status + " - " + error);
-              console.log(xhr.responseText);
-            },
-          });
-    }
-}
+// function move(seed) {
+//   let horses = document.getElementsByClassName("keySeed");
+//   for (let i = 0; i < horses.length; i++) {
+//     if (horses[i].textContent == seed) {
+//       if (seed.startsWith("♢")) {
+//         iQ += 120;
+//         base[i].style.bottom = iQ+"%";
+//       } else if (seed.startsWith("♡")) {
+//         iC += 120;
+//         base[i].style.bottom = iC+"%";
+//       } else if (seed.startsWith("♤")) {
+//         iP += 120;
+//         base[i].style.bottom = iP+"%";
+//       } else if (seed.startsWith("♧")) {
+//         iF += 120;
+//         base[i].style.bottom = iF+"%";
+//       } 	 	 	 
+//     }
+//   }
+//   check()
+// }
+// function check(){
+//     if(iQ >= 120 && iF >= 120 && iC >= 120 && iP >=120){
+//         $.ajax({
+//             type: "GET",
+//             url: "./PHP/control.php",
+//             dataType: "text",
+//             success: function (data) {
+//               document.getElementById('k0').innerHTML = getNewCard(data.substring(2, data.length - 2).split('.')[0], data.substring(1, data.length - 1).split('.')[1])
+//               play(data.substring(1, data.length - 1));
+//             },
+//             error: function (xhr, status, error) {
+//               console.log("Errore: " + status + " - " + error);
+//               console.log(xhr.responseText);
+//             },
+//           });
+//     }
+// }
