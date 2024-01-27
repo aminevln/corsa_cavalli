@@ -1,4 +1,4 @@
-console.log("ciao");
+
 let base = document.getElementsByClassName("home");
 let seeds = ["♤", "♡", "♢", "♧"];
 let positions = [0,0,0,0]
@@ -42,7 +42,12 @@ function play(carta) {
   if (carta.startsWith("E"))
     document.getElementById("w").textContent =
       "TUTTE LE CARTE SONO STATE ESTRATTE";
-  else {
+  else if(carta.startsWith('w')){
+    playC(carta)
+    
+    alert('ce un vincitore')
+
+  }else{
     document.getElementById("w").textContent = "STAI SCOMMETTENDO SU";
     let numero = carta.split(".")[0];
     let seed = carta.split(".")[1];
@@ -54,7 +59,27 @@ function play(carta) {
   else if (seed.startsWith("p")) seed = "♤";
   else if (seed.startsWith("f")) seed = "♧";
     document.getElementById("cartaUscita").innerHTML = getNewCard(numero, seed); //getBackCard()
-    move(y, seed)
+    move(y, seed, true)
+  }
+}
+function playA(carta) {
+  console.log(carta);
+  if (carta.startsWith("E"))
+    document.getElementById("w").textContent =
+      "TUTTE LE CARTE SONO STATE ESTRATTE";
+  else {
+    document.getElementById("w").textContent = "STAI SCOMMETTENDO SU";
+    let numero = carta.split(".")[0];
+    let seed = carta.split(".")[1];
+    let y = carta.split(".")[2];
+    //if(seed)
+    let a = "ciao";
+    if (seed.startsWith("q")) seed = "♢";
+    else if (seed.startsWith("c")) seed = "♡";
+    else if (seed.startsWith("p")) seed = "♤";
+    else if (seed.startsWith("f")) seed = "♧";
+    move(y, seed, true)
+    
   }
 }
 function selectedSeed(seed) {
@@ -114,7 +139,7 @@ function getBackCard() {
             <div class="cpn" style="margin: 0px; margin-top: 8px;">?</div>
         `;
 }
-function move(y, seed) {
+function move(y, seed, flag) {
   let horses = document.getElementsByClassName("keySeed");
   for (let i = 0; i < horses.length; i++) {
     if (horses[i].textContent == seed) {
@@ -133,40 +158,84 @@ function move(y, seed) {
       } 	 	 	 
     }
   }
-  check(positions, seed)
+  if(flag)
+    check(positions, seed)
 }
 function check(positions, seed){
-    $.ajax({
-      type: "GET",
-      url: "./PHP/control.php",
-      dataType: "text",
-      success: function (data) {
-        let a = data.substring(1, data.length-1)
-        if(allTheSame(positions, 120) && !listSorpassi[0]){
+    if(allTheSame(positions, 120) && !listSorpassi[0]){
+      $.ajax({
+        type: "GET",
+        url: "./PHP/control.php",
+        dataType: "text",
+        success: function (data) {
+          let a = data.substring(1, data.length-1)
           document.getElementById('k0').innerHTML = getNewCard(a.split('.')[0], char2Seed(a.split('.')[1]))
           listSorpassi[0] = true
-        }else if(allTheSame(positions, 240) && !listSorpassi[1]){
+          playA(a);
+        },
+        error: function (xhr, status, error) {
+          console.log("Errore: " + status + " - " + error);
+          console.log(xhr.responseText);
+        },
+      }); 
+      
+    }else if(allTheSame(positions, 240) && !listSorpassi[1]){
+      $.ajax({
+        type: "GET",
+        url: "./PHP/control.php",
+        dataType: "text",
+        success: function (data) {
+          let a = data.substring(1, data.length-1)
           document.getElementById('k1').innerHTML = getNewCard(a.split('.')[0], char2Seed(a.split('.')[1]))
           listSorpassi[1] = true
-        }
-        if(allTheSame(positions, 360) && !listSorpassi[2]){
+          playA(a);
+        },
+        error: function (xhr, status, error) {
+          console.log("Errore: " + status + " - " + error);
+          console.log(xhr.responseText);
+        },
+      }); 
+    }else if(allTheSame(positions, 360) && !listSorpassi[2]){
+      $.ajax({
+        type: "GET",
+        url: "./PHP/control.php",
+        dataType: "text",
+        success: function (data) {
+          let a = data.substring(1, data.length-1)
           document.getElementById('k2').innerHTML = getNewCard(a.split('.')[0], char2Seed(a.split('.')[1]))
           listSorpassi[2] = true
-        }
-        play(a);
-      },
-      error: function (xhr, status, error) {
-        console.log("Errore: " + status + " - " + error);
-        console.log(xhr.responseText);
-      },
-    });  
+          playA(a);
+        },
+        error: function (xhr, status, error) {
+          console.log("Errore: " + status + " - " + error);
+          console.log(xhr.responseText);
+        },
+      }); 
+    }
+    for (let i = 0; i < positions.length; i++) 
+      if (positions[i] == 480 ) {
+        switch(i){
+          case 0: 
+          alert('quadri')
+          break;
+          case 1: 
+          alert('cuori')
+          break;
+          case 2: 
+          alert('picche')
+          break; 
+          case 3:
+          alert('fiori') 
+          break;
+          
+      }
+    }
 }
 
 function allTheSame(a, n){
   for (let i = 0; i < a.length; i++) 
     if (a[i] < n ) 
         return false;
-  //listSorpassi[(n/120)-1]=true
   return true
 }
 function char2Seed(seed){

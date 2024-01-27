@@ -1,11 +1,9 @@
 <?php
 
 SESSION_START();
-
 function startsWith($parola, $lettera) {
     return strpos($parola, $lettera) === 2;
 }
-
 $setA = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 $setB = ['.p', '.c', '.q', '.f'];
 // Verifica se esiste un array di sessione per le carte uscite
@@ -62,6 +60,7 @@ if (!empty($coppie)) {
         $removedElement[0] = $removedElement[0].".".$_SESSION['idxC'];
     }
     $_SESSION['carteUscite'][] = $removedElement[0];
+    echo json_encode($removedElement[0]."%");
     if($_SESSION['idxC']>=480 ||  $_SESSION['idxF']>=480 || $_SESSION['idxQ']>=480 || $_SESSION['idxP']>=480)
      {
         $_SESSION['idxQ'] = 0;
@@ -69,7 +68,6 @@ if (!empty($coppie)) {
         $_SESSION['idxF'] = 0;
         $_SESSION['idxC'] = 0;
      }
-    echo json_encode($removedElement[0]."%");
 } else {
     echo json_encode('E');
     // Se tutte le carte sono state estratte, reimposta l'array delle carte uscite
