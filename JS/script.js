@@ -1,6 +1,8 @@
 console.log("ciao");
 let base = document.getElementsByClassName("home");
 let seeds = ["♤", "♡", "♢", "♧"];
+let positions = [0,0,0,0]
+let listSorpassi = [false, false, false, false]
 for (let i = 0, k = 0; i < base.length; i++, k += 25) {
   base[i].innerHTML = getCard(13, seeds[i]);
   base[i].style.left = k - 1 + "%";
@@ -48,12 +50,11 @@ function play(carta) {
     //if(seed)
     let a = "ciao";
     if (seed.startsWith("q")) seed = "♢";
-    else if (seed.startsWith("c")) seed = "♡";
-    else if (seed.startsWith("p")) seed = "♤";
-    else if (seed.startsWith("f")) seed = "♧";
-
+  else if (seed.startsWith("c")) seed = "♡";
+  else if (seed.startsWith("p")) seed = "♤";
+  else if (seed.startsWith("f")) seed = "♧";
     document.getElementById("cartaUscita").innerHTML = getNewCard(numero, seed); //getBackCard()
-    document.getElementById("keySeed").style.top = y
+    move(y, seed)
   }
 }
 function selectedSeed(seed) {
@@ -113,41 +114,65 @@ function getBackCard() {
             <div class="cpn" style="margin: 0px; margin-top: 8px;">?</div>
         `;
 }
-// function move(seed) {
-//   let horses = document.getElementsByClassName("keySeed");
-//   for (let i = 0; i < horses.length; i++) {
-//     if (horses[i].textContent == seed) {
-//       if (seed.startsWith("♢")) {
-//         iQ += 120;
-//         base[i].style.bottom = iQ+"%";
-//       } else if (seed.startsWith("♡")) {
-//         iC += 120;
-//         base[i].style.bottom = iC+"%";
-//       } else if (seed.startsWith("♤")) {
-//         iP += 120;
-//         base[i].style.bottom = iP+"%";
-//       } else if (seed.startsWith("♧")) {
-//         iF += 120;
-//         base[i].style.bottom = iF+"%";
-//       } 	 	 	 
-//     }
-//   }
-//   check()
-// }
-// function check(){
-//     if(iQ >= 120 && iF >= 120 && iC >= 120 && iP >=120){
-//         $.ajax({
-//             type: "GET",
-//             url: "./PHP/control.php",
-//             dataType: "text",
-//             success: function (data) {
-//               document.getElementById('k0').innerHTML = getNewCard(data.substring(2, data.length - 2).split('.')[0], data.substring(1, data.length - 1).split('.')[1])
-//               play(data.substring(1, data.length - 1));
-//             },
-//             error: function (xhr, status, error) {
-//               console.log("Errore: " + status + " - " + error);
-//               console.log(xhr.responseText);
-//             },
-//           });
-//     }
-// }
+function move(y, seed) {
+  let horses = document.getElementsByClassName("keySeed");
+  for (let i = 0; i < horses.length; i++) {
+    if (horses[i].textContent == seed) {
+      if (seed.startsWith("♢")) {
+        base[i].style.bottom = y;
+        positions[0] = parseInt(y.slice(0, -1));
+      } else if (seed.startsWith("♡")) {
+        base[i].style.bottom = y;
+        positions[1] = parseInt(y.slice(0, -1));
+      } else if (seed.startsWith("♤")) {
+        base[i].style.bottom = y;
+        positions[2] = parseInt(y.slice(0, -1));
+      } else if (seed.startsWith("♧")) {
+        base[i].style.bottom = y;
+        positions[3] = parseInt(y.slice(0, -1));
+      } 	 	 	 
+    }
+  }
+  check(positions, seed)
+}
+function check(positions, seed){
+    $.ajax({
+      type: "GET",
+      url: "./PHP/control.php",
+      dataType: "text",
+      success: function (data) {
+        let a = data.substring(1, data.length-1)
+        if(allTheSame(positions, 120) && !listSorpassi[0]){
+          document.getElementById('k0').innerHTML = getNewCard(a.split('.')[0], char2Seed(a.split('.')[1]))
+          listSorpassi[0] = true
+        }else if(allTheSame(positions, 240) && !listSorpassi[1]){
+          document.getElementById('k1').innerHTML = getNewCard(a.split('.')[0], char2Seed(a.split('.')[1]))
+          listSorpassi[1] = true
+        }
+        if(allTheSame(positions, 360) && !listSorpassi[2]){
+          document.getElementById('k2').innerHTML = getNewCard(a.split('.')[0], char2Seed(a.split('.')[1]))
+          listSorpassi[2] = true
+        }
+        play(a);
+      },
+      error: function (xhr, status, error) {
+        console.log("Errore: " + status + " - " + error);
+        console.log(xhr.responseText);
+      },
+    });  
+}
+
+function allTheSame(a, n){
+  for (let i = 0; i < a.length; i++) 
+    if (a[i] < n ) 
+        return false;
+  //listSorpassi[(n/120)-1]=true
+  return true
+}
+function char2Seed(seed){
+  if (seed.startsWith("q")) seed = "♢";
+  else if (seed.startsWith("c")) seed = "♡";
+  else if (seed.startsWith("p")) seed = "♤";
+  else if (seed.startsWith("f")) seed = "♧";
+  return seed
+}
