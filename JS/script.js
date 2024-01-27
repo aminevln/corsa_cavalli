@@ -44,6 +44,7 @@ function play(carta) {
     document.getElementById("w").textContent = "STAI SCOMMETTENDO SU";
     let numero = carta.split(".")[0];
     let seed = carta.split(".")[1];
+    let y = carta.split(".")[2];
     //if(seed)
     let a = "ciao";
     if (seed.startsWith("q")) seed = "♢";
@@ -52,7 +53,7 @@ function play(carta) {
     else if (seed.startsWith("f")) seed = "♧";
 
     document.getElementById("cartaUscita").innerHTML = getNewCard(numero, seed); //getBackCard()
-    move(seed);
+    document.getElementById("keySeed").style.top = y
   }
 }
 function selectedSeed(seed) {
