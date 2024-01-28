@@ -1,5 +1,6 @@
 *{
     color: #fff;
+    transition: all .5s ease-in-out;
 }
 body{
     background: #000000;
@@ -88,6 +89,7 @@ body{
   margin-top: 30px;
   position: absolute;
   bottom: -20%;
+  transition: all .5s ease-in-out;
 }
 #pista{
   position: absolute;
